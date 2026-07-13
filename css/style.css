@@ -1,0 +1,28 @@
+        :root {
+            --bg-dark: #31100D;       
+            --brand-red: #FF3300;     
+            --bg-pink: #F5E2DE;       
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--brand-red);
+            overflow-x: hidden;
+        }
+
+        .modal-open { overflow: hidden; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* Barra de rolagem */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--brand-red); border-radius: 4px; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
