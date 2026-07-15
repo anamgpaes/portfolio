@@ -348,6 +348,14 @@ function renderProjects() {
 function openProjectModal(index) {
     const data = projectsData[index];
     if (!data) return;
+    
+    // Google Analytics: registrar qual projeto foi aberto
+    if (typeof gtag === 'function') {
+        gtag('event', 'project_view', {
+            project_name: data.title,
+            client: data.client
+        });
+    }
 
     // Textos Base
     document.getElementById('modal-tag').innerText = data.tag;
@@ -396,20 +404,22 @@ function openProjectModal(index) {
         assetsSection.classList.add('hidden');
         assetsGrid.innerHTML = '';
     }
-    
-    // Botão de Contato
+
+    // Configurar botão "Entrar em contato"
     const ctaButton = document.getElementById('modal-email-trigger');
-    if (data.actionLink) {
-        ctaButton.href = data.actionLink;
-        ctaButton.innerText = data.actionLabel || "Entrar em contato";
-        ctaButton.target = "_blank";
-        ctaButton.rel = "noopener noreferrer";
-    } else {
-        ctaButton.href = `mailto:anagaspaes@gmail.com?subject=Interesse no Projeto: ${encodeURIComponent(data.title)}`;
-        ctaButton.innerText = "Solicitar Orçamento";
-        ctaButton.removeAttribute('target');
-        ctaButton.removeAttribute('rel');
-    }
+    
+    ctaButton.href = data.actionLink;
+    ctaButton.innerText = "Entrar em contato";
+    ctaButton.target = "_blank";
+    ctaButton.rel = "noopener noreferrer";
+    
+    ctaButton.onclick = function () {
+        if (typeof gtag === 'function') {
+            gtag('event', 'contact_click', {
+                project_name: data.title
+            });
+        }
+    };
 
     // Abrir Modal
     const modal = document.getElementById('projectModal');
